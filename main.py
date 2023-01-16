@@ -3,6 +3,7 @@ import datetime
 import io
 import logging
 import os
+import time
 
 import pytz
 from telethon import TelegramClient
@@ -10,8 +11,9 @@ from telethon.tl.functions.photos import UploadProfilePhotoRequest, DeletePhotos
 
 from funcs import ConfigParser, get_weather, get_image
 
-if not os.path.exists("user.session"):
-    raise Exception("You need execute log_in.py file first!")
+while not os.path.exists("user.session"):
+    logging.warning("You need execute log_in.py file first!")
+    time.sleep(5)
 
 logging.basicConfig(level=logging.INFO)
 client = TelegramClient("user", ConfigParser.getint("Telegram", "api_id"), ConfigParser.get("Telegram", "api_hash"))
