@@ -1,11 +1,7 @@
 import datetime
 import math
 
-import pytz as pytz
 from PIL import Image, ImageFont, ImageDraw
-
-from .get_weather import get_weather
-from .config_parser import ConfigParser
 
 night_color = (27, 27, 54)
 day_color = (1, 174, 242)
