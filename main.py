@@ -24,12 +24,16 @@ async def main():
     logging.info("Bot started")
     while True:
         logging.info("Getting weather...")
-        temp = get_weather()
+        weather = get_weather()
         logging.info("Render image...")
         avatar = get_image(
-            datetime.datetime.now(tz=pytz.timezone(ConfigParser.get("Data", "locale"))),
-            temp
+            datetime.datetime.now(tz=pytz.timezone(ConfigParser.get("Data", "locale"))), weather.temp
         )
+
+        if weather.weather is None:
+            await client.send_message("me", weather.raw + "\n\nНе определена погода")
+        else:
+            print(weather.weather)
 
         avatar_file = io.BytesIO()
         avatar.save(avatar_file, "JPEG")

@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
-from .config_parser import ConfigParser
+from classes import Weather, WeatherInfo
+from funcs.config_parser import ConfigParser
 
 
 def get_weather():
@@ -14,4 +15,9 @@ def get_weather():
         ).text,
         'html.parser'
     )
-    return int(bs.find('div', {'class': 'temp'}).text.strip()[:-2])
+    data = bs.find("div", {'class': 'current-weather'})
+    return Weather(
+        temp=int(data.find('div', {'class': 'temp'}).text.strip()[:-2]),
+        weather=WeatherInfo.get(data.find('div', {'class': 'phrase'}).text),
+        raw=data
+    )
