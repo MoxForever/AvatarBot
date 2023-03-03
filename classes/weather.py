@@ -6,6 +6,7 @@ class WeatherInfo(Enum):
     rain = 2
     fog = 3
     cloud = 4
+    smog = 5
 
     @staticmethod
     def get(data: str):
@@ -20,6 +21,8 @@ class WeatherInfo(Enum):
             return WeatherInfo.rain
         elif "дождь" in f_data:
             return WeatherInfo.rain
+        elif "смог" in f_data:
+            return WeatherInfo.smog
 
         return None
 
