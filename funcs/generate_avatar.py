@@ -3,6 +3,8 @@ import math
 
 from PIL import Image, ImageFont, ImageDraw
 
+from classes import Weather
+
 night_color = (27, 27, 54)
 day_color = (1, 174, 242)
 
@@ -62,18 +64,18 @@ def draw_calendar(img: Image, current_time: datetime.datetime, temp: int):
     img.paste(base, (63, 162), base)
 
 
-def get_image(current_time: datetime.datetime, temp: int):
+def get_image(current_time: datetime.datetime, weather: Weather):
     time_color = get_color_and_opacity(current_time)
 
     img = avatar_default.copy()
     base = Image.new("RGB", img.size, time_color[:3])
     draw = ImageDraw.Draw(base)
-    draw.rectangle((74, 223, 94, 243), fill=gradient(blue_color, red_color, (temp+20)/60))
+    draw.rectangle((74, 223, 94, 243), fill=gradient(blue_color, red_color, (weather.temp+20)/60))
     base.paste(img, (0, 0), img)
 
     black = Image.new("RGBA", img.size, (0, 0, 0, time_color[3]))
     base.paste(black, (0, 0), black)
     draw_time_clock(base, current_time)
-    draw_calendar(base, current_time, temp)
+    draw_calendar(base, current_time, weather.temp)
 
     return base

@@ -27,11 +27,11 @@ async def main():
         weather = get_weather()
         logging.info("Render image...")
         avatar = get_image(
-            datetime.datetime.now(tz=pytz.timezone(ConfigParser.get("Data", "locale"))), weather.temp
+            datetime.datetime.now(tz=pytz.timezone(ConfigParser.get("Data", "locale"))), weather
         )
 
         if weather.weather is None:
-            await client.send_message("me", weather.raw + "\n\nНе определена погода")
+            await client.send_message("me", f"{weather.raw}\n\nНе определена погода")
         else:
             print(weather.weather)
 
